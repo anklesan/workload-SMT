@@ -1,5 +1,5 @@
-from solver import Solver
-from dataset import Worker, Task
+from .solver import Solver
+from .dataset import Worker, Task
 import json
 
 

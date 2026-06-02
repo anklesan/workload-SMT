@@ -13,7 +13,7 @@ from z3 import (
     sat,
 )
 
-from dataset import Task, Worker
+from .dataset import Task, Worker
 
 
 class Solver:
