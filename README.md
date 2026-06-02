@@ -1,5 +1,5 @@
 # Workflow-Z3: A Distributed Compute Workflow Solver using SMT Solver
-A final project for CS-517 Theory of Computation @ Oregon State University, Spring 2027
+A final project for CS-517 Theory of Computation @ Oregon State University, Spring 2026
 
 Contributors:
 - Laura Kuo
