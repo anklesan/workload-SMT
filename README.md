@@ -1,5 +1,6 @@
 # Workflow-Z3: A Distributed Compute Workflow Solver using SMT Solver
 A final project for CS-517 Theory of Computation @ Oregon State University, Spring 2027
+
 Contributors:
 - Laura Kuo
 - Ninad Anklesaria
@@ -7,6 +8,7 @@ Contributors:
 
 # Installation
 To run this code, it is recommended to use the `uv` python build tool. You can install uv [here](https://docs.astral.sh/uv/getting-started/installation/)
+
 Once you have `uv` installed, you can install the dependencies by running `uv sync`
 
 # Usage
