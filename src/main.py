@@ -1,6 +1,7 @@
+import time
+import json
 from .solver import Solver
 from .dataset import Worker, Task
-import json
 
 
 def load_workers(fpath: str) -> list[Worker]:
@@ -28,25 +29,29 @@ def main():
 
     results = []
     for task in tasks:
+        start_time = time.perf_counter()
         result = solver.schedule_task(task, workers)
+        elapsed = time.perf_counter() - start_time
         task.render_dag(f"img/{task.task_id}_dag.png")
-        results.append((task.task_id, result))
+        results.append((task.task_id, result, elapsed))
 
     # Summary
-    print("\n" + "=" * 72)
+    print("\n" + "=" * 82)
     print("  SCHEDULING SUMMARY")
-    print("=" * 72)
-    print(f"  {'Task':<40s} {'Makespan':>8s} {'LB':>8s} {'Gap':>8s}")
-    print(f"  {'-' * 66}")
-    for task_id, result in results:
+    print("=" * 82)
+    print(f"  {'Task':<40s} {'Makespan':>8s} {'LB':>8s} {'Gap':>8s} {'Time (s)':>12s}")
+    print(f"  {'-' * 78}")
+    for task_id, result, elapsed in results:
         if result is not None:
             ms = result["makespan"]
             lb = result["lower_bound"]
             gap = ms - lb
-            print(f"  {task_id:<40s} {ms:>8d} {lb:>8d} {gap:>+8d}")
+            print(f"  {task_id:<40s} {ms:>8d} {lb:>8d} {gap:>+8d} {elapsed:>12.4f}")
         else:
-            print(f"  {task_id:<40s} {'UNSOLVABLE':>8s}")
-    print("=" * 72)
+            print(
+                f"  {task_id:<40s} {'UNSOLVABLE':>8s} {'-':>8s} {'-':>8s} {elapsed:>12.4f}"
+            )
+    print("=" * 82)
 
 
 if __name__ == "__main__":
