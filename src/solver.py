@@ -2,6 +2,7 @@
 Makespan minimization workflow scheduler using Z3 SMT solver.
 """
 
+import time
 from z3 import (
     Optimize,
     Int,
@@ -61,6 +62,7 @@ class Solver:
 
     def schedule_task(self, task: Task, workers: dict[str, Worker]) -> dict | None:
         """Solve a single Task and return the schedule, or None on failure."""
+        start_time = time.perf_counter()
 
         opt = Optimize()
         opt.set("timeout", self.timeout)
@@ -190,8 +192,9 @@ class Solver:
         result = opt.check()
 
         if result != sat:
+            duration = time.perf_counter() - start_time
             print(
-                f"[solver] Task '{task.task_id}': no solution found (result={result})."
+                f"[solver] Task '{task.task_id}': no solution found (result={result}) (solved in {duration:.4f}s)."
             )
             return None
 
@@ -223,13 +226,15 @@ class Solver:
         # Sort schedule by start time
         schedule.sort(key=lambda x: (x["start"], x["end"]))
 
-        print(f"[solver] Task '{task.task_id}': optimal makespan = {makespan_val}")
+        duration = time.perf_counter() - start_time
+        print(f"[solver] Task '{task.task_id}': optimal makespan = {makespan_val} (solved in {duration:.4f}s)")
         self._print_schedule(task.task_id, schedule, makespan_val, lower_bound)
 
         return {
             "makespan": makespan_val,
             "lower_bound": lower_bound,
             "schedule": schedule,
+            "runtime": duration,
         }
 
     def _print_schedule(
