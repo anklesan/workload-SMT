@@ -2,6 +2,24 @@ import time
 import json
 from .solver import Solver
 from .dataset import Worker, Task
+import argparse
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--workers",
+        type=str,
+        required=True,
+        help="The path to your list of Workers, given as a json file.",
+    )
+    parser.add_argument(
+        "--workflows",
+        type=str,
+        required=True,
+        help="The path to your Workflows, given as a json file.",
+    )
+    return parser.parse_args()
 
 
 def load_workers(fpath: str) -> list[Worker]:
@@ -21,8 +39,9 @@ def load_workflows(fpath: str) -> list[Task]:
 
 
 def main():
-    workers = load_workers("data/workers.json")
-    tasks = load_workflows("data/workflows.json")
+    args = parse_args()
+    workers = load_workers(args.workers)
+    tasks = load_workflows(args.workflows)
     solver = Solver()
 
     print(f"Loaded {len(workers)} workers and {len(tasks)} workflow tasks.\n")

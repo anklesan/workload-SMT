@@ -12,6 +12,6 @@ To run this code, it is recommended to use the `uv` python build tool. You can i
 Once you have `uv` installed, you can install the dependencies by running `uv sync`
 
 # Usage
-To run this script, use `uv run run-solver`. This will read the list of workflows in `data/workflows.json` and output an efficient workload schedule, based on the compute resource constraints defined in `data/workers.json`.
+To run this script, use `uv run workflow-solver`. This will read the list of workflows in `data/workflows.json` and output an efficient workload schedule, based on the compute resource constraints defined in `data/workers.json`.
 
 
